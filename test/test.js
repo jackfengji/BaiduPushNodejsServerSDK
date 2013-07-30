@@ -1,6 +1,7 @@
 
-var id0 = '1100801892847586532';
-var id1 = '';
+config = require('./config');
+var id0 = config.ID;
+
 function queryBindList(client) {
   var opt = {
     user_id: id0
@@ -20,26 +21,43 @@ function pushMsg(client) {
     user_id: id0,
     messages: JSON.stringify(["hello, push0", "hello, push1", "hello, push2"]),
     msg_keys: JSON.stringify(["key0", "key1", "key2"])
-  }
+  };
+
   client.pushMsg(opt, function(err, result) {
     if (err) {
       console.log(err);
       return;
     }
+
     console.log(result);
-  })
+  });
 }
 
+function setTag(client) {
+    var opt = {
+        user_id: id0,
+        tag: 'test_tag',
+    }
+
+    client.setTag(opt, function (err, result) {
+        if (err) {
+            console.log(err);
+            return ;
+        }
+
+        console.log(result);
+    });
+}
 
 var Push = require('../index');
 (function() {
   var opt = {
-   ak: 'your ak here',
-   sk: 'your sk here'
-
+   ak: config.AK,
+   sk: config.SK 
   };
-  var client = new Push(opt);
-   //queryBindList(client);
-   pushMsg(client);
 
+  var client = new Push(opt);
+  //queryBindList(client);
+  //pushMsg(client);
+  setTag(client);
 })()
