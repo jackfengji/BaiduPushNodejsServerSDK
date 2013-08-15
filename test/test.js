@@ -11,7 +11,7 @@ function queryBindList(client) {
       console.log(err);
       return;
     }
-    console.log(result);
+    console.log(JSON.stringify(result));
   })
 }
 
@@ -49,6 +49,21 @@ function setTag(client) {
     });
 }
 
+function queryUserTags(client) {
+    var opt = {
+        user_id: id0
+    };
+
+    client.queryUserTags(opt, function (err, result) {
+        if (err) {
+            console.log(err);
+            return ;
+        }
+
+        console.log(JSON.stringify(result));
+    });
+}
+
 var Push = require('../index');
 (function() {
   var opt = {
@@ -57,7 +72,8 @@ var Push = require('../index');
   };
 
   var client = new Push(opt);
-  //queryBindList(client);
+  queryBindList(client);
   //pushMsg(client);
-  setTag(client);
+  //setTag(client);
+  //queryUserTags(client);
 })()
